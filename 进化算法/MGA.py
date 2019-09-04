@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 DNA_SIZE = 10  # DNA length
 POP_SIZE = 20  # population size
 CROSS_RATE = 0.6  # mating probability (DNA crossover)
-MUTATION_RATE = 0.001  # mutation probability
+MUTATION_RATE = 0.005  # mutation probability
 N_GENERATIONS = 200  # the times
 X_BOUND = [0, 5]  # x upper and lower bounds
 
@@ -48,5 +48,32 @@ class MGA:
         for _ in range(n):
             sub_pop_idx = np.random.choice(np.arange(0, self.pop_size), size=2, replace=False)
             sub_pop = self.pop[sub_pop_idx]
-            product =F(self.translateDNA(sub_pop))
+            product = F(self.translateDNA(sub_pop))
             fitness = self.get_fitness(product)
+            loser_winner_idx = np.argsort(fitness)
+            loser_winner = sub_pop[loser_winner_idx]
+            loser_winner = self.crossover(loser_winner)
+            loser_winner = self.mutate(loser_winner)
+            self.pop[sub_pop_idx] = loser_winner
+        DNA_prob = self.translateDNA(self.pop)
+        pred = F(DNA_prob)
+        return DNA_prob, pred
+
+
+plt.ion()
+x = np.linspace(*X_BOUND, 200)
+plt.plot(x, F(x))
+
+ga = MGA(DNA_size=DNA_SIZE, DNA_bound=[0, 1], cross_rate=CROSS_RATE, mutation_rate=MUTATION_RATE, pop_size=POP_SIZE)
+
+for _ in range(N_GENERATIONS):
+    DNA_prob, pred = ga.evolve(5)
+
+    if "sca" in globals():
+        sca.remove()
+
+    sca = plt.scatter(DNA_prob, pred, s=200, lw=0, c="red", alpha=0.5)
+    plt.pause(0.05)
+
+plt.ioff()
+plt.show()
