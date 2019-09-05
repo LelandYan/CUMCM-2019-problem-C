@@ -50,6 +50,7 @@ plt.plot(x, F(x))
 for _ in range(N_GENERATIONS):
     F_values = F(translateDNA(pop))
 
+
     if "sca" in globals():
         sca.remove()
     sca = plt.scatter(translateDNA(pop), F_values, s=200, lw=0, c="red", alpha=0.5)
