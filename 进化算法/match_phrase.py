@@ -6,6 +6,7 @@ CROSS_RATE = 0.4  # mating probability (DNA crossover)
 MUTATION_RATE = 0.01  # mutation probability
 N_GENERATIONS = 1000  # the times
 
+#
 DNA_SIZE = len(TARGET_PHRASE)
 TARGET_ASCII = np.fromstring(TARGET_PHRASE, dtype=np.uint8)  # convert string to ascii
 ASCII_BOUND = [32, 126]
