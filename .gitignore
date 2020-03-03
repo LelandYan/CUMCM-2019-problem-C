@@ -1,0 +1,4 @@
+##ignore this file##
+/target/
+
+/word_embedding_cal/generated/GoogleNews-vectors-negative300.bin.gz
